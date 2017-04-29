@@ -22,6 +22,7 @@ public class Oware
 	public void play(){
 		while (!controller.isGameOver()){
 			int pitNumber;
+			boolean moveResult = false;
 			//Human has pits 0-5 and computer has pits 6-11.
 			if (controller.getPlayerToMove().isHuman()){
 				StdOut.println("enter Pit NUmber to sow from");
@@ -33,7 +34,8 @@ public class Oware
 				int High = 11;
 				pitNumber = r.nextInt(High-Low) + Low; 
 			}
-			controller.makeMoveStartingAt(pitNumber);
+			moveResult = controller.makeMoveStartingAt(pitNumber);
+			if(moveResult == false) continue;
 			controller.movePlayToNextPlayer();
 		}
 	}

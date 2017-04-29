@@ -7,12 +7,14 @@ public class Controller
 	private int playerToMove; //0 or 1 - current index of the array
 	private final Player[] players;
 	private final Board board; 
+	private final Move move;
 	
 	public Controller() {
 		this.player0 = new Player(true);
 		this.player1 = new Player(false);
 		players = new Player[]{player0,player1};
 		this.board=new Board();
+		this.move = new Move(board);
 	}
 	public static void main(String[] args)
 	{
@@ -30,19 +32,24 @@ public class Controller
 	
 	public boolean makeMoveStartingAt(int pitNumber)
 	{
-		Pit active = board.getPit(pitNumber);
 		StdOut.println("Move starts at pit number " + pitNumber);
+		boolean isMoveSuccessful = move.startMove(getPlayerToMove(), pitNumber);
+		if(isMoveSuccessful == true)
+		{
+			StdOut.println("Sowing in ccw direction...");
+			
+			StdOut.println("All seeds sown.");
 
-		int numSeeds = active.getNumSeeds();
-		int lastPit = active.startSowing();
+			board.printAll();
+
+			return true;
+		}
+		else
+		{
+			StdOut.println("Pit is not valid to start with");
+			return false;
+		}
 		
-		StdOut.println("Sowing in ccw direction...");
-		
-		StdOut.println("All seeds sown.");
-
-    board.printAll();
-
-    return true;
 	}
 
 	public boolean isGameOver() {
